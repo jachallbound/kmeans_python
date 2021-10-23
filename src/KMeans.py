@@ -1,4 +1,6 @@
 import numpy as np
+import numpy.random as npr
+import ipdb
 
 class KMeans:
     """Class for performing KMeans classification.
@@ -7,7 +9,7 @@ class KMeans:
     Choose any integer of K means to find.
     Choose any dimension of cluster data to operate on.
     """
-    def __init__(self, K, data):
+    def __init__(self, K, data, labels):
         """Initialize Class
 
         Parameters:
@@ -16,11 +18,13 @@ class KMeans:
             Amount of means you wish to find in the data.
         data : *array_like*
             Cluster of data. Any amount of dimensions.
-            Do not have a singleton dimension.
+            data.shape[0] must be the amount of dimensions
         """
         self.K = K
         self.data = data
-        self.ndim = data.ndim
+        self.ndim = data.shape[0]
+        self.labels = labels
+        self.labels_p = np.zeros_like(labels)
 
     def get_means(self, random=False):
         """Method to calculate and return new K means
@@ -31,10 +35,17 @@ class KMeans:
             K_mat = np.zeros([self.K, self.ndim])
             for k in range(self.K):
                 for d in range(self.ndim):
-                    K_mat[k,d] = np.random.uniform(
-                        np.min(self.data[d]),np.max(self.data[d])
+                    K_mat[k,d] = npr.uniform(
+                        np.min(self.data[d,]),np.max(self.data[d,])
                         )
         else:
             # Get mean from data
             K_mat = 1
         return K_mat
+
+    def map_points(self, K_mat):
+        #d = np.sqrt(np.sum(np.square(p1-p2)))
+        for i in range(self.data.shape[-1]):
+            x = self.data[:, i].T
+            self.labels_p[0, i] = np.argmin(np.sqrt(np.sum(np.square(K_mat-x), axis=1)))
+        return self.labels_p
