@@ -1,4 +1,6 @@
 import numpy as np
+import numpy.random as npr
+import ipdb
 
 class KMeans:
     """Class for performing KMeans classification.
@@ -16,11 +18,11 @@ class KMeans:
             Amount of means you wish to find in the data.
         data : *array_like*
             Cluster of data. Any amount of dimensions.
-            Do not have a singleton dimension.
+            data.shape[0] must be the amount of dimensions
         """
         self.K = K
         self.data = data
-        self.ndim = data.ndim
+        self.ndim = data.shape[0]
 
     def get_means(self, random=False):
         """Method to calculate and return new K means
@@ -31,8 +33,8 @@ class KMeans:
             K_mat = np.zeros([self.K, self.ndim])
             for k in range(self.K):
                 for d in range(self.ndim):
-                    K_mat[k,d] = np.random.uniform(
-                        np.min(self.data[d]),np.max(self.data[d])
+                    K_mat[k,d] = npr.uniform(
+                        np.min(self.data[d,]),np.max(self.data[d,])
                         )
         else:
             # Get mean from data
