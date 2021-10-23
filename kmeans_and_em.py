@@ -24,7 +24,7 @@ pd = npr.rand(samples) # Decision vector for choosing observed data based on pri
 "Data matrix"
 data_K = np.zeros((K,dims,samples)) # All distribution data
 data = np.zeros((dims,samples)) # Observation data
-labels = np.zeros((1,samples))
+labels = np.zeros((1,samples), dtype=int)
 means = np.zeros((K, dims))
 cov = np.zeros((K, dims, dims))
 
@@ -38,14 +38,22 @@ for k in range(K):
     data = np.where(observation, data_K[k, ], data)
     labels = np.where(observation, k, labels)
 
-    #data[priors_csum[k] < pd <= priors_csum[k+1]] = 1
-
-
-km = KMeans(K, data)
+km = KMeans(K, data, labels)
 
 K_mat = km.get_means(True)
-
 print(K_mat)
+
+labels_mapped = km.map_points(K_mat)
+print(labels_mapped)
+
+"Plot histograms of labels and labels_mapped"
+plt.figure()
+plt.hist(np.sort(labels.squeeze()))
+
+plt.figure()
+plt.hist(np.sort(labels_mapped.squeeze()))
+
+plt.show()
 
 #fig = px.scatter_3d(x=data[0], y=data[1], z=data[2])
 #fig.show()

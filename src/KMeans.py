@@ -9,7 +9,7 @@ class KMeans:
     Choose any integer of K means to find.
     Choose any dimension of cluster data to operate on.
     """
-    def __init__(self, K, data):
+    def __init__(self, K, data, labels):
         """Initialize Class
 
         Parameters:
@@ -23,6 +23,8 @@ class KMeans:
         self.K = K
         self.data = data
         self.ndim = data.shape[0]
+        self.labels = labels
+        self.labels_p = np.zeros_like(labels)
 
     def get_means(self, random=False):
         """Method to calculate and return new K means
@@ -40,3 +42,10 @@ class KMeans:
             # Get mean from data
             K_mat = 1
         return K_mat
+
+    def map_points(self, K_mat):
+        #d = np.sqrt(np.sum(np.square(p1-p2)))
+        for i in range(self.data.shape[-1]):
+            x = self.data[:, i].T
+            self.labels_p[0, i] = np.argmin(np.sqrt(np.sum(np.square(K_mat-x), axis=1)))
+        return self.labels_p
