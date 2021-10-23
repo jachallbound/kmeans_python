@@ -2,7 +2,7 @@ import numpy as np
 import numpy.random as npr
 import ipdb
 
-class KMeans:
+class KMeans():
     """Class for performing KMeans classification.
     Find K integer means in a cluster of data that optimizes the decision
     boundaries.
@@ -26,7 +26,7 @@ class KMeans:
         self.labels = labels
         self.labels_p = np.zeros_like(labels)
 
-    def get_means(self, random=False):
+    def generate_means(self, random=False):
         """Method to calculate and return new K means
 
         """
@@ -47,5 +47,5 @@ class KMeans:
         #d = np.sqrt(np.sum(np.square(p1-p2)))
         for i in range(self.data.shape[-1]):
             x = self.data[:, i].T
-            self.labels_p[0, i] = np.argmin(np.sqrt(np.sum(np.square(K_mat-x), axis=1)))
+            self.labels_p[i] = np.argmin(np.sqrt(np.sum(np.square(K_mat-x), axis=1)))
         return self.labels_p
