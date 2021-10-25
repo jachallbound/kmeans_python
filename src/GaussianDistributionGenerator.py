@@ -1,3 +1,4 @@
+import ipdb
 import numpy as np
 import numpy.random as npr
 
@@ -41,9 +42,15 @@ def generate_gaussian_data(D,
     if priors == None:
         priors = npr.dirichlet(np.ones(D), size=1)
     if means == None:
-        means = np.array([npr.rand(ndim)*npr.randint(1,high=10) for i in range(D)])
+        means = np.array([npr.rand(ndim)*npr.randint(10,high=200) for i in range(D)])
     if covs == None:
-        covs = np.array([npr.rand(ndim,ndim)*npr.randint(1, high=3) for i in range(D)])
+        covs = np.array([npr.rand(ndim,ndim)*npr.randint(10, high=30) for i in range(D)])
+        "Fix not positive-semidefinite covariance matrices"
+        "https://stackoverflow.com/questions/41515522/numpy-positive-semi-definite-warning"
+        for d in range(D):
+            min_eigen_value = np.min(np.real(np.linalg.eigvals(covs[d, ])))
+            if min_eigen_value < 0:
+                covs[d, ] -= 10*min_eigen_value * np.eye(*covs[d, ].shape)
 
     "Distribution Parameters"
     # Number of means to search for, also number of distributions to create
