@@ -4,12 +4,9 @@ Documentation, License etc.
 @package kmeans_and_em
 '''
 import copy
-import ipdb
 import matplotlib.pyplot as plt
 import numpy as np
 import numpy.random as npr
-import plotly.express as px
-
 
 from src.KMeans import KMeans
 from src.GaussianDistributionGenerator import generate_gaussian_data

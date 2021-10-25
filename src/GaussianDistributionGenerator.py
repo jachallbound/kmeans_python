@@ -1,4 +1,3 @@
-import ipdb
 import numpy as np
 import numpy.random as npr
 

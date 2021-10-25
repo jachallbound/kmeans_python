@@ -1,6 +1,5 @@
 import numpy as np
 import numpy.random as npr
-import ipdb
 
 class KMeans():
     """Class for performing KMeans classification.
