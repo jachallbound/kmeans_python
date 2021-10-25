@@ -34,18 +34,21 @@ class KMeans():
         for k in range(self.K):
             for d in range(self.ndim):
                 if random: # Get random means
-                    K_mat[k,d] = npr.uniform(
-                        np.min(self.data[d,]),np.max(self.data[d,])
-                        )
+                    K_mat[k,d] = npr.uniform(np.min(self.data[d, ]), np.max(self.data[d, ]))
                 else: # Get means from mapped points
-                    ipdb.set_trace()
+                    #ipdb.set_trace()
                     K_mat[k,d] = np.mean(self.data[d, np.where(self.labels_p == k)], axis=1)
-                    K_mat = 1
+                    if np.isnan(K_mat[k,d]):
+                        K_mat[k,d] = npr.uniform(np.min(self.data[d, ]), np.max(self.data[d, ]))
         self.K_mat = K_mat
         return K_mat
 
     def map_points(self, K_mat):
         for i in range(self.data.shape[-1]):
             x = self.data[:, i].T
-            self.labels_p[i] = np.argmin(np.sqrt(np.sum(np.square(K_mat-x), axis=1)))
+            #self.labels_p[i] = np.argmin(np.sqrt(np.sum(np.square(K_mat-x), axis=1)))
+            self.labels_p[i] = np.argmin(self.euclidean_distance(K_mat, x, axis=1))
         return self.labels_p
+
+    def euclidean_distance(self, p0, p1, axis=1):
+        return np.sqrt(np.sum(np.square(p0-p1), axis=axis))
