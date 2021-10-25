@@ -1,8 +1,3 @@
-'''
-Documentation, License etc.
-
-@package kmeans_and_em
-'''
 import copy
 import matplotlib.pyplot as plt
 import numpy as np
