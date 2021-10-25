@@ -30,21 +30,21 @@ class KMeans():
         """Method to calculate and return new K means
 
         """
-        if random:
-            # Get random means
-            K_mat = np.zeros([self.K, self.ndim])
-            for k in range(self.K):
-                for d in range(self.ndim):
+        K_mat = np.zeros([self.K, self.ndim])
+        for k in range(self.K):
+            for d in range(self.ndim):
+                if random: # Get random means
                     K_mat[k,d] = npr.uniform(
                         np.min(self.data[d,]),np.max(self.data[d,])
                         )
-        else:
-            # Get mean from data
-            K_mat = 1
+                else: # Get means from mapped points
+                    ipdb.set_trace()
+                    K_mat[k,d] = np.mean(self.data[d, np.where(self.labels_p == k)], axis=1)
+                    K_mat = 1
+        self.K_mat = K_mat
         return K_mat
 
     def map_points(self, K_mat):
-        #d = np.sqrt(np.sum(np.square(p1-p2)))
         for i in range(self.data.shape[-1]):
             x = self.data[:, i].T
             self.labels_p[i] = np.argmin(np.sqrt(np.sum(np.square(K_mat-x), axis=1)))

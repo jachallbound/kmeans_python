@@ -54,13 +54,9 @@ def generate_gaussian_data(D,
     data_D = np.zeros((D,ndim,samples)) # All distribution data
     data = np.zeros((ndim,samples)) # Observation data
     labels = np.zeros((samples), dtype=int)
-    #means = np.zeros((K, dims))
-    #cov = np.zeros((K, dims, dims))
 
     "Generate K Gaussian Distributions"
     for d in range(D):
-        #means[k, ] = npr.rand(dims)*npr.randint(1, high=10)
-        #cov[k, ] = npr.rand(dims,dims)*npr.randint(1, high=3)
         data_D[d, ] = npr.multivariate_normal(means[d, ], covs[d, ], size=samples).T
 
         observation = np.logical_and(pd>priors_csum[d], pd<=priors_csum[d+1])
