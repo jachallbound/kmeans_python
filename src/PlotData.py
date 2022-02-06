@@ -53,4 +53,6 @@ def SubPlotData(K, data, labels2, means2):
                          zorder=K+1,
                          color=c) for a in range(2)]
     [axs[a].legend(sum([["L"+str(l)+" Data","L"+str(l)+" Mean"] for l in range(K)], [])) for a in range(2)]
+    axs[0].set_title("True Data Distributions")
+    axs[1].set_title("Predicted Distributions")
     plt.draw()

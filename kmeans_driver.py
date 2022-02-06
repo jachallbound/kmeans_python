@@ -65,8 +65,9 @@ if data.shape[0] == 2 or data.shape[0] == 3:
 fig, axs = plt.subplots(1, 2, sharey=True, tight_layout=True)
 axs[0].hist(np.sort(labels.squeeze()), bins=K, density=True)
 axs[1].hist(np.sort(labels_mapped.squeeze()), bins=K, density=True)
-plt.draw()
+axs[0].set_title("True # of Samples per Class")
+axs[1].set_title("Predicted # of Samples per Class")
 
 
-plt.show(block=False)
+plt.show()
 
