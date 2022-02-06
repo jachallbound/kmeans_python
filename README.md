@@ -20,6 +20,8 @@ It will also plot a histogram showing the distribution of true and predicted sam
 + You can choose to create a different amount of actual distributions than what you try to classify, but it's currently broken.
 Thus, you must classify the same amount of distributions you create.
 
+## To Do
++ Write docstrings for all functions in `src/` (I'm probably not going to do this)
 
 ## Requirements
 + Python 3
